@@ -1,0 +1,54 @@
+﻿@model TestViewModel
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Test</th>
+            <th scope="col">Expected</th>
+            <th scope="col">Actual</th>
+            <th scope="col">Result</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Product.GetProductById(1).ProductName</td>
+            <td>Gibson Les Paul Deluxe Ebony</td>
+            <td>@Model.GetProductById.ProductName</td>
+            <td>
+                @if (Model.GetProductById.ProductName == " Gibson Les Paul Deluxe Ebony ")
+                {<span class="text-success">Pass</span>}
+                else
+                { <span class="text-danger">Fail</span>}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Category.GetCategoryById(1).ProductName</td>
+            <td>Electric Guitars</td>
+            <td>@Model.GetCategoryById.CategoryName</td>
+            <td>
+                @if (Model.GetCategoryById.CategoryName == "Electric Guitars")
+                {<span class="text-success">Pass</span>}
+                else
+                { <span class="text-danger">Fail</span>}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Category.GetCategoryById(1).ProductName</td>
+            <td>Electric Guitars</td>
+            <td>@Model.GetCategoryById.CategoryName</td>
+            <td>
+                @if (Model.GetCategoryById.CategoryName == "Electric Guitars")
+                {<span class="text-success">Pass</span>}
+                else
+                { <span class="text-danger">Fail</span>}
+            </td>
+        </tr>
+
+    </tbody>
+</table>

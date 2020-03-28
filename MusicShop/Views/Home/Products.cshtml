@@ -1,0 +1,67 @@
+﻿@model ProductViewModel
+
+<h1 class="mb-5">Products</h1>
+
+@{var count = 1;}
+<table class="table table-responsive-sm">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category</th>
+            <th scope="col">Image</th>
+            <th scope="col">Availability</th>
+            <th scope="col">Add To Cart</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product product in Model.AllProducts)
+        {
+            <tr>
+                @*  *@
+                <th scope="row">@count</th>
+                <td>@product.ProductName</td>
+                <td>@product.Price.ToString("C", new CultureInfo("en-FR"))</td>
+                <td>@product.Category.CategoryName</td>
+                <td><img src="@product.ImageThumbnailUrl" alt="@product.ProductName" /></td>
+                <td>
+                    @{ if (product.InStock)
+                        {
+                            <span class="text-success ">@product.AmountInStock Pieces Available</span>
+                        }
+                        else
+                        {
+                            <span class="text-warning">0 Available</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @{ if (product.InStock)
+                        {
+
+
+                           
+
+                            
+                                <a class="btn btn-success w-100" asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@product.ProductId" asp-route-quantity="1">
+                                    Add To Cart
+                                </a>
+
+
+
+
+                        }
+                        else
+                        {
+                            <span class="btn btn-warning disabled w-100">Sold Out</span>
+                        }
+                    }
+                </td>
+                @{count++;}
+            </tr>
+
+
+        }
+    </tbody>
+</table>

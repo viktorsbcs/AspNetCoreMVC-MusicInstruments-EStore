@@ -1,0 +1,13 @@
+﻿@model CartViewModel
+
+
+<h1>ViewCart</h1>
+
+
+
+@foreach (CartItem item in Model.CartItems)
+{
+    <p>Product name: @item.Product.ProductName</p>
+    <p>Price per unit: @item.Product.Price</p>
+    <p> Quantity: @item.Quantity</p>
+}
