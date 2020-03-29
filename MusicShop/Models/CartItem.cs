@@ -11,7 +11,7 @@ namespace MusicShop.Models
         public int CartItemId { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
-        public String CartId { get; set; }
+        public string CartId { get; set; }
         public int Quantity { get; set; }
     }
 }

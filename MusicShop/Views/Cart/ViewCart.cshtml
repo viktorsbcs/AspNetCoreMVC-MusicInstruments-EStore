@@ -5,9 +5,43 @@
 
 
 
-@foreach (CartItem item in Model.CartItems)
-{
-    <p>Product name: @item.Product.ProductName</p>
-    <p>Price per unit: @item.Product.Price</p>
-    <p> Quantity: @item.Quantity</p>
-}
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">Product</th>
+            <th scope="col">Price Per Unit</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (CartItem item in @Model.CartItems)
+        {
+
+            <tr >
+
+                <td class="align-middle"><img class="w-auto mr-5" src="@item.Product.ImageThumbnailUrl" /> <span>@item.Product.ProductName</span></td>
+                <td class="align-middle text-center">@item.Product.Price.ToString("C", new CultureInfo("en-FR"))</td>
+                <td class="align-middle text-center" >@item.Quantity</td>
+                <td class="align-middle text-center">@((item.Quantity * item.Product.Price).ToString("C", new CultureInfo("en-FR")))</td>
+            </tr>
+        }
+
+    </tbody>
+
+
+    <tfoot>
+        <tr class="table-secondary text-center">
+            <td></td>
+            <td></td>
+            <td class="font-weight-bold">Cart Total: </td>
+            <td class="font-weight-bold">@Model.CartTotalValue.ToString("C", new CultureInfo("en-FR"))</td>
+
+        </tr>
+    </tfoot>
+</table>

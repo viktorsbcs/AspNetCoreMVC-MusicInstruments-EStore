@@ -75,8 +75,8 @@ namespace MusicShop.Models
                 var newCartItem = new CartItem()
                 {
                     CartId = this.CartId,
-                    Product = cartItem.Product,
-                    ProductId = cartItem.ProductId,
+                    Product = product,
+                    ProductId = product.ProductId,
                     Quantity = quantity
                 };
 
@@ -91,6 +91,7 @@ namespace MusicShop.Models
 
 
             _appDbContext.SaveChanges();
+            this.CartItems = GetCartItems();
         }
 
     }

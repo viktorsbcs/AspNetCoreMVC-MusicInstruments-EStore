@@ -35,7 +35,8 @@ namespace MusicShop.Controllers
 
         public IActionResult ViewCart()
         {
-            return View(new CartViewModel() { CartItems = _cart.GetCartItems(), CartTotalValue=_cart.TotalCartValue() });
+            _cart.CartItems = _cart.GetCartItems();
+            return View(new CartViewModel() { CartItems = _cart.CartItems, CartTotalValue = _cart.TotalCartValue() });
         }
     }
 }
