@@ -1,0 +1,3 @@
+﻿@model Cart
+
+    Cart Items: @Model.CartItems.Count | Total Price: @Model.TotalCartValue().ToString("C", new CultureInfo("en-FR")) 

@@ -25,7 +25,7 @@
 
             <tr >
 
-                <td class="align-middle"><img class="w-auto mr-5" src="@item.Product.ImageThumbnailUrl" /> <span>@item.Product.ProductName</span></td>
+                <td class="align-middle"><img class="w-auto mr-5" src="@item.Product.ImageThumbnailUrl" /> <span class="font-weight-bold">@item.Product.ProductName</span></td>
                 <td class="align-middle text-center">@item.Product.Price.ToString("C", new CultureInfo("en-FR"))</td>
                 <td class="align-middle text-center" >@item.Quantity</td>
                 <td class="align-middle text-center">@((item.Quantity * item.Product.Price).ToString("C", new CultureInfo("en-FR")))</td>
