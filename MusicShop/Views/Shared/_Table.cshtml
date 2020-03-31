@@ -1,0 +1,26 @@
+﻿@model OrderViewModel
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (CartItem item in Model.CartItems)
+        {
+
+            <tr>
+                <td>@item.Product.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>@((@item.Quantity * @item.Product.Price).ToString("C", new CultureInfo("en-FR")))</td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>

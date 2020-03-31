@@ -2,7 +2,7 @@
 
 namespace MusicShop.Migrations
 {
-    public partial class initial3 : Migration
+    public partial class reset2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

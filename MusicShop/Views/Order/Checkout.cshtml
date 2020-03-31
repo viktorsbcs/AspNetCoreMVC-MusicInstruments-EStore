@@ -1,0 +1,45 @@
+﻿@model Order
+
+    <div>
+
+        <h1>Checkout</h1> <br />
+
+
+
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Country { get; set; }
+
+        public string Address { get; set; }
+
+        public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+
+
+        <form asp-controller="Order" asp-action="Checkout" method="post">
+            
+            <div asp-validation-summary="All"></div>
+
+            <div class="form-group">
+                <label for="inputAddress">First Name</label>
+                <input asp-for="FirstName" type="text" class="form-control" >
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputAddress2">Last Name</label>
+                <input asp-for="LastName" type="text" class="form-control" >
+            </div>
+            
+            
+
+
+            <button type="submit" class="btn btn-primary">Complete Order</button>
+        </form>
+
+    </div>

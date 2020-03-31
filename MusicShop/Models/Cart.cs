@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,7 +16,6 @@ namespace MusicShop.Models
 
         public string CartId { get; set; }
         public List<CartItem> CartItems { get; set; }
-
         public Cart(AppDbContext appDbContext)
         {
             this._appDbContext = appDbContext;
@@ -24,11 +25,17 @@ namespace MusicShop.Models
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
             var dbContext = services.GetService<AppDbContext>();
 
+            
+
+            
+
 
             string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
             session.SetString("CartId", cartId);
 
             return new Cart(dbContext) { CartId = cartId };
+
+
 
 
         }
@@ -37,6 +44,12 @@ namespace MusicShop.Models
         {
             return _appDbContext.CartItems.Where(c=>c.CartId == this.CartId).Include(p=>p.Product).ToList();
         }
+
+        public string GetCartId()
+        {
+            return this.CartId;
+        }
+
 
         public decimal TotalCartValue()
         {

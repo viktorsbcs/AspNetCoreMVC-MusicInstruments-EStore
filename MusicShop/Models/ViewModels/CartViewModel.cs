@@ -9,5 +9,7 @@ namespace MusicShop.Models.ViewModels
     {
         public List<CartItem> CartItems { get; set; }
         public decimal CartTotalValue { get; set; }
+
+        public string CartId { get; set; }
     }
 }

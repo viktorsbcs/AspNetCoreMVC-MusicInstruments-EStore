@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MusicShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200326063253_initial3")]
-    partial class initial3
+    [Migration("20200331092543_reset3")]
+    partial class reset3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,41 @@ namespace MusicShop.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("MusicShop.Models.Cart", b =>
+                {
+                    b.Property<string>("CartId")
+                        .HasColumnType("text");
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("MusicShop.Models.CartItem", b =>
+                {
+                    b.Property<int>("CartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CartId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CartItemId");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
+                });
 
             modelBuilder.Entity("MusicShop.Models.Category", b =>
                 {
@@ -62,6 +97,41 @@ namespace MusicShop.Migrations
                             CategoryDescription = "Loud and mobile electric bass amplifiers",
                             CategoryName = "Bass Amplifiers"
                         });
+                });
+
+            modelBuilder.Entity("MusicShop.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CartId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("MusicShop.Models.Product", b =>
@@ -209,6 +279,26 @@ namespace MusicShop.Migrations
                             ProductName = "Ashdown Studio 12",
                             ShortDescription = "Ashdown Studio 12, Power: 100 W, Equipped with: 1x 12' Ashdown Speaker"
                         });
+                });
+
+            modelBuilder.Entity("MusicShop.Models.CartItem", b =>
+                {
+                    b.HasOne("MusicShop.Models.Cart", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId");
+
+                    b.HasOne("MusicShop.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MusicShop.Models.Order", b =>
+                {
+                    b.HasOne("MusicShop.Models.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("MusicShop.Models.Product", b =>

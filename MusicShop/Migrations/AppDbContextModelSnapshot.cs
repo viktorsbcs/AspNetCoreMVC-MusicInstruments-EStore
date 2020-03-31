@@ -18,6 +18,16 @@ namespace MusicShop.Migrations
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("MusicShop.Models.Cart", b =>
+                {
+                    b.Property<string>("CartId")
+                        .HasColumnType("text");
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("Cart");
+                });
+
             modelBuilder.Entity("MusicShop.Models.CartItem", b =>
                 {
                     b.Property<int>("CartItemId")
@@ -35,6 +45,8 @@ namespace MusicShop.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("CartItemId");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("ProductId");
 
@@ -83,6 +95,41 @@ namespace MusicShop.Migrations
                             CategoryDescription = "Loud and mobile electric bass amplifiers",
                             CategoryName = "Bass Amplifiers"
                         });
+                });
+
+            modelBuilder.Entity("MusicShop.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CartId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("MusicShop.Models.Product", b =>
@@ -234,11 +281,22 @@ namespace MusicShop.Migrations
 
             modelBuilder.Entity("MusicShop.Models.CartItem", b =>
                 {
+                    b.HasOne("MusicShop.Models.Cart", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId");
+
                     b.HasOne("MusicShop.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MusicShop.Models.Order", b =>
+                {
+                    b.HasOne("MusicShop.Models.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("MusicShop.Models.Product", b =>

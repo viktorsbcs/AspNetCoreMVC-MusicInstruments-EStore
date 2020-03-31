@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MusicShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200328222856_Cart")]
-    partial class Cart
+    [Migration("20200331093740_Stable")]
+    partial class Stable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,7 @@ namespace MusicShop.Migrations
 
                     b.HasKey("CartId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Cart");
                 });
 
             modelBuilder.Entity("MusicShop.Models.CartItem", b =>
@@ -97,6 +97,41 @@ namespace MusicShop.Migrations
                             CategoryDescription = "Loud and mobile electric bass amplifiers",
                             CategoryName = "Bass Amplifiers"
                         });
+                });
+
+            modelBuilder.Entity("MusicShop.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CartId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("MusicShop.Models.Product", b =>
@@ -257,6 +292,13 @@ namespace MusicShop.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MusicShop.Models.Order", b =>
+                {
+                    b.HasOne("MusicShop.Models.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("MusicShop.Models.Product", b =>

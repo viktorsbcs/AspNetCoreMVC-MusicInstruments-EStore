@@ -9,11 +9,13 @@
                 <a class="nav-link" asp-controller="Home" asp-action="Products">Home <span class="sr-only">(current)</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Test" asp-action="Index">Test <span class="sr-only">(current)</span></a>
+            <li class="nav-item invisible">
+                <a class="nav-link " asp-controller="Test" asp-action="Index">Test <span class="sr-only">(current)</span></a>
             </li>
+        </ul>
 
-            <li class="nav-item ml-auto">
+        <ul class="navbar-nav ml-auto ">
+            <li class="nav-item text-right">
                 <a class="nav-link " asp-controller="Cart" asp-action="ViewCart">
 
                     @await Component.InvokeAsync("CartNav")
@@ -24,15 +26,15 @@
             </li>
 
             @*<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>*@
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown link
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>*@
         </ul>
     </div>
 </nav>

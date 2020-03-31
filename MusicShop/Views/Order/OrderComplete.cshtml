@@ -1,0 +1,10 @@
+﻿@model OrderViewModel
+
+<div>
+    <h3>Thank you for your order @Model.Order.FirstName @Model.Order.LastName</h3> 
+
+    <p>Items purchased:</p>
+
+    <partial name="_Table" model="@Model"/>
+
+</div>

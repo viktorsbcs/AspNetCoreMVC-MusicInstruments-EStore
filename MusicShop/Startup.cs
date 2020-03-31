@@ -26,13 +26,15 @@ namespace MusicShop
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
+            services.AddDbContextPool<AppDbContext>(options =>
                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<Cart>(sp => Cart.GetCart(sp));
+
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddControllersWithViews();

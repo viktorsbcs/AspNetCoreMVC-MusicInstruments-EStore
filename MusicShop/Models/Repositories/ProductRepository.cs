@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MusicShop.Models.Interfaces;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace MusicShop.Models.Repositories
 
         public int IncreaseStock(int productId, int amount)
         {
-            var product = this.AllProducts.FirstOrDefault(p => p.ProductId == productId);
+            var product =  this.AllProducts.FirstOrDefault(p => p.ProductId == productId);
 
             if (product != null)
             {
@@ -39,6 +40,7 @@ namespace MusicShop.Models.Repositories
                 product.InStock = true;
 
                 _appDbContext.SaveChanges();
+               
                 return product.AmountInStock;
             }
 
