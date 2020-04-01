@@ -1,45 +1,51 @@
 ﻿@model Order
 
-    <div>
+<div class="col-12">
 
-        <h1>Checkout</h1> <br />
-
-
+    <h1>Checkout</h1> <br />
 
 
-        public string FirstName { get; set; }
+    <form asp-controller="Order" asp-action="Checkout" method="post">
 
-        public string LastName { get; set; }
+        <div asp-validation-summary="All"></div>
 
-        public string Country { get; set; }
+        <div class="form-group">
+            <label asp-for="FirstName">First Name</label>
+            <input asp-for="FirstName" type="text" placeholder="First Name" class="form-control">
+        </div>
 
-        public string Address { get; set; }
+        <div class="form-group">
+            <label asp-for="LastName">Last Name</label>
+            <input asp-for="LastName" placeholder="Last Name" type="text" class="form-control">
+        </div>
 
-        public string Email { get; set; }
+        <div class="form-group">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" placeholder="Email" type="email" class="form-control">
+        </div>
 
-        public string PhoneNumber { get; set; }
+        <div class="form-group">
+            <label asp-for="Country">Country</label>
+            <partial name="_CountriesList" model="@Model" />
+        </div>
 
-
-
-        <form asp-controller="Order" asp-action="Checkout" method="post">
-            
-            <div asp-validation-summary="All"></div>
-
-            <div class="form-group">
-                <label for="inputAddress">First Name</label>
-                <input asp-for="FirstName" type="text" class="form-control" >
-            </div>
-
-
-            <div class="form-group">
-                <label for="inputAddress2">Last Name</label>
-                <input asp-for="LastName" type="text" class="form-control" >
-            </div>
-            
-            
+        <div class="form-group">
+            <label asp-for="Address">Address</label>
+            <input asp-for="Address" placeholder="Address" type="text" class="form-control">
+        </div>
 
 
-            <button type="submit" class="btn btn-primary">Complete Order</button>
-        </form>
+        <div class="form-group">
+            <label asp-for="PhoneNumber">Phone Number</label>
+            <input asp-for="PhoneNumber" placeholder="Phone Number"  class="form-control">
+        </div>
 
-    </div>
+
+        <br />
+        <div class="form-group text-center">
+
+            <button type="submit" class="btn btn-primary ">Complete Order</button>
+        </div>
+    </form>
+
+</div>

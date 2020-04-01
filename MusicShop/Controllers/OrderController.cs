@@ -26,29 +26,20 @@ namespace MusicShop.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
-
             if (ModelState.IsValid)
             {
-
                 var orderNew = _orderRepository.CreateOrder(order);
                 TempData["orderId"] = orderNew.OrderId;
                 
 
                 return RedirectToAction("OrderComplete");
             }
-
-            
-
             return View(order);
-
         }
 
         // GET: /<controller>/
         public IActionResult Checkout()
         {
-
-
-
             return View();
         }
 

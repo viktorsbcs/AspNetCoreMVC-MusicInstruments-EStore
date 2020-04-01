@@ -36,7 +36,11 @@ namespace MusicShop.Models.Repositories
                 {
                     CartId = _cart.GetCartId(),
                     FirstName = order.FirstName,
-                    LastName = order.LastName
+                    LastName = order.LastName,
+                    Country = order.Country,
+                    Address = order.Address,
+                    Email = order.Email,
+                    PhoneNumber = order.PhoneNumber
 
 
                 };
