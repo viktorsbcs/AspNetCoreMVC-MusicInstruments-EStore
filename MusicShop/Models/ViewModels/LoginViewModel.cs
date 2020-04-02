@@ -16,7 +16,8 @@ namespace MusicShop.Models.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required]
+        [Display(Name ="Remember me")]
         public bool RememberMe { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }

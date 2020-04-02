@@ -28,10 +28,22 @@ namespace MusicShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: model.RememberMe, false);
 
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Products", "Home");
+                }
 
+                ModelState.AddModelError("", "Invalid Login Attempt"); 
+
+                
+                
+            }
             return View(model);
         }
 
