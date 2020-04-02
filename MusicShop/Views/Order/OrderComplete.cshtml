@@ -2,7 +2,13 @@
 
 <div>
     <h3>Thank you for your order @Model.Order.FirstName @Model.Order.LastName</h3> 
-    <p>Delivery info: @Model.Order.Country</p>
+    
+    <p>Delivery info:</p>
+    <p>Email: @Model.Order.Email</p>
+    <p>Address: @Model.Order.Address</p>
+    <p>Country: @Model.Order.Country</p>
+    <p>Phone Nr: @Model.Order.PhoneNumber</p>
+
     <p>Items purchased:</p>
 
     <partial name="_Table" model="@Model"/>

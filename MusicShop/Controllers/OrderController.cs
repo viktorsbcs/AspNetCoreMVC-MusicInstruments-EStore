@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MusicShop.Models;
 using MusicShop.Models.ViewModels;
 using MusicShop.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,6 +38,7 @@ namespace MusicShop.Controllers
             return View(order);
         }
 
+        [Authorize]
         // GET: /<controller>/
         public IActionResult Checkout()
         {
