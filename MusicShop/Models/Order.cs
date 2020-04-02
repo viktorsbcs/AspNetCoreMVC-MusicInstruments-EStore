@@ -34,8 +34,8 @@ namespace MusicShop.Models
         public string Email { get; set; }
 
         [Required]
-        [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
     }
 }
