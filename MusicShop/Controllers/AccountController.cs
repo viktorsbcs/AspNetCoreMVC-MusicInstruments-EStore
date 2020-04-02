@@ -24,25 +24,36 @@ namespace MusicShop.Controllers
 
         public IActionResult Login()
         {
+            
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model )
         {
+            
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: model.RememberMe, false);
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Products", "Home");
+                    if (string.IsNullOrEmpty(model.ReturnUrl))
+                    {
+                        return RedirectToAction("Products", "Home");
+
+                    }
+                    else
+                    {
+                        return Redirect(model.ReturnUrl);
+                    }
                 }
 
-                ModelState.AddModelError("", "Invalid Login Attempt"); 
+                ModelState.AddModelError("", "Invalid Login Attempt");
 
-                
-                
+
+
             }
             return View(model);
         }
@@ -71,7 +82,7 @@ namespace MusicShop.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    RedirectToAction("Products", "Home");
+                    return RedirectToAction("Products", "Home");
                 }
                 else
                 {
