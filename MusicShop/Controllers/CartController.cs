@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicShop.Models;
 using MusicShop.Models.Interfaces;
@@ -11,6 +12,7 @@ using MusicShop.Models.ViewModels;
 
 namespace MusicShop.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly IProductRepository _productRepository;

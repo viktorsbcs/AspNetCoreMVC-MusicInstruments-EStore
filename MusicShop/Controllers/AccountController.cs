@@ -24,15 +24,15 @@ namespace MusicShop.Controllers
 
         public IActionResult Login()
         {
-            
+
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model )
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            
+
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: model.RememberMe, false);
@@ -61,7 +61,11 @@ namespace MusicShop.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            if (User.Identity.IsAuthenticated)
+            {
+                await _signInManager.SignOutAsync();
+
+            }
             return RedirectToAction("Products", "Home");
 
         }

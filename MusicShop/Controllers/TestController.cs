@@ -50,5 +50,11 @@ namespace MusicShop.Controllers
             
             return View(testViewModel);
         }
+
+
+        public IActionResult Admin()
+        {
+            return View();
+        }
     }
 }
