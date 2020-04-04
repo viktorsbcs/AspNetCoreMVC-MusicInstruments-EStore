@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicShop.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,5 +15,6 @@ namespace MusicShop.Models.Interfaces
 
         int  IncreaseStock(int productId, int amount);
         int  DecreaseStock(int productId, int amount);
+        public void CreateProduct(Product product);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MusicShop.Models.Interfaces;
+using MusicShop.Models.ViewModels;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,12 @@ namespace MusicShop.Models.Repositories
             }
             return -1;
 
+        }
+
+        public void CreateProduct(Product product)
+        {
+            _appDbContext.Products.Add(product);
+            _appDbContext.SaveChanges();
         }
 
     }

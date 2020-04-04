@@ -27,5 +27,13 @@ namespace MusicShop.Models.Repositories
         {
             return _appDbContext.Categories.FirstOrDefault(c => c.CategoryId == categoryId);
         }
+
+        public void CreateCategory(Category category)
+        {
+            _appDbContext.Categories.Add(category);
+            _appDbContext.SaveChanges();
+        }
+
+
     }
 }

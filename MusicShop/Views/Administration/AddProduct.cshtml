@@ -8,41 +8,99 @@
 <h1>AddProduct</h1>
 
 
-    @*public string ProductName { get; set; }
+@*public string ProductName { get; set; }
 
-        public string ShortDescription { get; set; }
+    public string ShortDescription { get; set; }
 
-        public string LongDescription { get; set; }
+    public string LongDescription { get; set; }
 
-        public string ImageThumbnailUrl { get; set; }
+    public string ImageThumbnailUrl { get; set; }
 
-        public string ImageUrl { get; set; }
+    public string ImageUrl { get; set; }
 
-        public decimal Price { get; set; }
+    public decimal Price { get; set; }
 
-        public int AmountInStock { get; set; }
+    public int AmountInStock { get; set; }
 
-        public bool InStock { get; set; }
+    public bool InStock { get; set; }
 
-        public int CategoryId { get; set; }
+    public int CategoryId { get; set; }
 
-        public Category Category { get; set; }*@
+    public Category Category { get; set; }*@
 
 
 <hr />
 
-<form asp-action="AddProduct" asp-controller="Administration"  method="post">
+<form asp-action="AddProduct" asp-controller="Administration" method="post">
 
     <div asp-validation-summary="All" class="alert  alert-danger @((ViewContext.ViewData.ModelState.Count==0) ?  "invisible" : "") " role="alert"></div>
 
     <div class="form-group">
-        <label asp-for="FirstName">First Name</label>
-        <input asp-for="FirstName" type="text" placeholder="First Name" class="form-control">
-        <span asp-validation-for="FirstName" class="text-danger"></span>
+        <label asp-for="@Model.ProductName">Product Title</label>
+        <input asp-for="@Model.ProductName" type="text" placeholder="" class="form-control">
+        <span asp-validation-for="@Model.ProductName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <input type="submit" value="Add Product" class="btn btn-primary" />
+        <label asp-for="@Model.ShortDescription">Short Description</label>
+        <input asp-for="@Model.ShortDescription" type="text" placeholder="" class="form-control">
+        <span asp-validation-for="@Model.ShortDescription" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.LongDescription">Long Description</label>
+        <input asp-for="@Model.LongDescription" type="text" placeholder="" class="form-control">
+        <span asp-validation-for="@Model.LongDescription" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="@Model.ImageThumbnailUrl">Thumbnail url</label>
+        <input asp-for="@Model.ImageThumbnailUrl" type="" placeholder="" class="form-control">
+        <span asp-validation-for="@Model.ImageThumbnailUrl" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="@Model.ImageUrl">Full image url</label>
+        <input asp-for="@Model.ImageUrl" type="" placeholder="" class="form-control">
+        <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="@Model.Price">Price Per Unit</label>
+        <input asp-for="@Model.Price" type="number" placeholder="" class="form-control">
+        <span asp-validation-for="@Model.Price" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="@Model.AmountInStock">Amount To Add</label>
+        <input asp-for="@Model.AmountInStock" type="number" placeholder="" class="form-control">
+        <span asp-validation-for="@Model.AmountInStock" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.CategoryId">Category</label>
+
+        <select class="form-control" asp-for="@Model.CategoryId">
+
+            @foreach (Category item in @Model.CategoryList)
+            {
+                <option value="@item.CategoryId">@item.CategoryName</option>
+
+            }
+
+        </select>
+        <span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
+
+    </div>
+
+
+    <div class="form-group text-center mt-5">
+
+        <button type="submit" class="btn btn-primary ">Add Product</button>
     </div>
 </form>
 

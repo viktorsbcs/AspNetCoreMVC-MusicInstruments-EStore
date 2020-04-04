@@ -9,5 +9,6 @@ namespace MusicShop.Models.Interfaces
     {
         IEnumerable<Category> AllCategories { get; }
         public Category GetCategoryById(int categoryId);
+        public void CreateCategory(Category category);
     }
 }
