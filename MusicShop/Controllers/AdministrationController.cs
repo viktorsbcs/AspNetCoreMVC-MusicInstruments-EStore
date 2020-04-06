@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicShop.Models;
 using MusicShop.Models.Interfaces;
@@ -9,6 +10,8 @@ using MusicShop.Models.ViewModels;
 
 namespace MusicShop.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class AdministrationController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -25,6 +28,12 @@ namespace MusicShop.Controllers
         public IActionResult AdminPanel()
         {
             return View();
+        }
+
+        public IActionResult ViewProducts()
+        {
+            IEnumerable<Product> products = _productRepository.AllProducts;
+            return View(products);
         }
 
         [HttpGet]

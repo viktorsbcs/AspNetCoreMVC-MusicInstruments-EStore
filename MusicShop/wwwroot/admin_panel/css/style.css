@@ -10592,6 +10592,7 @@ body {
 
     #layoutSidenav #layoutSidenav_nav {
         flex-basis: 225px;
+        /*flex-basis: 225px;*/
         flex-shrink: 0;
         transition: transform 0.15s ease-in-out;
         z-index: 1038;
@@ -10638,7 +10639,8 @@ body {
     }
 
     .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
-        transform: translateX(-225px);
+        transform: translateX(-255px);
+        /*transform: translateX(-225px);*/
     }
 
     .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {

@@ -86,6 +86,10 @@ namespace MusicShop.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    await _userManager.AddToRoleAsync(user, "User");
+                    
+
                     return RedirectToAction("Products", "Home");
                 }
                 else

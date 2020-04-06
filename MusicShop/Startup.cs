@@ -33,6 +33,7 @@ namespace MusicShop
             services.AddIdentity<IdentityUser, IdentityRole>()
                     .AddEntityFrameworkStores<AppDbContext>();
 
+            services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -40,6 +41,7 @@ namespace MusicShop
 
             services.AddHttpContextAccessor();
             services.AddSession();
+            services.AddAuthentication();
             services.AddAuthentication();
             services.AddControllersWithViews();
         }

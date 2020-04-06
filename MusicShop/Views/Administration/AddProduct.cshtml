@@ -1,35 +1,10 @@
 ﻿@model MusicShop.Models.ViewModels.AddProductViewModel
-
 @{
 
     Layout = "~/Views/Shared/Admin/_AdminLayout.cshtml";
 }
 
-<h1>AddProduct</h1>
-
-
-@*public string ProductName { get; set; }
-
-    public string ShortDescription { get; set; }
-
-    public string LongDescription { get; set; }
-
-    public string ImageThumbnailUrl { get; set; }
-
-    public string ImageUrl { get; set; }
-
-    public decimal Price { get; set; }
-
-    public int AmountInStock { get; set; }
-
-    public bool InStock { get; set; }
-
-    public int CategoryId { get; set; }
-
-    public Category Category { get; set; }*@
-
-
-<hr />
+<h1>Create Product</h1>
 
 <form asp-action="AddProduct" asp-controller="Administration" method="post">
 
@@ -100,7 +75,7 @@
 
     <div class="form-group text-center mt-5">
 
-        <button type="submit" class="btn btn-primary ">Add Product</button>
+        <button type="submit" class="btn btn-primary ">Create Product</button>
     </div>
 </form>
 
