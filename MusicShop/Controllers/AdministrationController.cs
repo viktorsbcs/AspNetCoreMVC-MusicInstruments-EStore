@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MusicShop.Models;
 using MusicShop.Models.Interfaces;
@@ -15,19 +16,34 @@ namespace MusicShop.Controllers
     public class AdministrationController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IProductRepository _productRepository;
 
-        public AdministrationController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public AdministrationController(IProductRepository productRepository, ICategoryRepository categoryRepository, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
 
             this._productRepository = productRepository;
             this._categoryRepository = categoryRepository;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
         }
 
         
         public IActionResult AdminPanel()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch(UnauthorizedAccessException e)
+            {
+                Console.WriteLine(e.Message);
+                ModelState.AddModelError("", "Not authotized");
+                return View("Home","Products");
+            }
+
+
         }
 
         public IActionResult ViewProducts()
@@ -85,6 +101,9 @@ namespace MusicShop.Controllers
             //_categoryRepository.CreateCategory(category);
             return RedirectToAction("AdminPanel");
         }
+
+
+      
     }
 
 

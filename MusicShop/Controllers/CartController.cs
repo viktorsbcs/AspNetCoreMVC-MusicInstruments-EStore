@@ -23,7 +23,7 @@ namespace MusicShop.Controllers
             this._productRepository = productRepository;
             this._cart = cart;
         }
-        public RedirectToActionResult AddToCart(int productId, int quantity)
+        public IActionResult AddToCart(int productId, int quantity)
         {
             var product = _productRepository.GetProductById(productId);
             if (product != null)
@@ -31,7 +31,8 @@ namespace MusicShop.Controllers
                 _cart.AddToCart(product, quantity);
             }
 
-                return RedirectToAction("ViewCart");
+
+            return RedirectToAction("Products", "Home");
             
         }
 
@@ -40,5 +41,7 @@ namespace MusicShop.Controllers
             _cart.CartItems = _cart.GetCartItems();
             return View(new CartViewModel() { CartId = _cart.CartId ,CartItems = _cart.CartItems, CartTotalValue = _cart.TotalCartValue() });
         }
+
+       
     }
 }
