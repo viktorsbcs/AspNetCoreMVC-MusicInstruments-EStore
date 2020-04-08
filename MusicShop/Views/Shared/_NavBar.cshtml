@@ -24,7 +24,7 @@
             @if (signInManager.IsSignedIn(User))
             {
 
-                //Check if user is NOT admin
+                //Check if user has role USER
                 @if (!User.IsInRole("Admin"))
                 {
 
@@ -49,6 +49,9 @@
 
                         @*<a class="dropdown-item" href="#">Activity Log</a>*@
                         <a class="dropdown-item" asp-controller="User" asp-action="Details" asp-route-name="@User.Identity.Name">Profile</a>
+                        <a class="dropdown-item" asp-controller="User" asp-action="ChangePassword" >Change Password</a>
+
+
                         <div class="dropdown-divider"></div>
 
                         <form asp-controller="Account" asp-action="Logout" method="post" class="">

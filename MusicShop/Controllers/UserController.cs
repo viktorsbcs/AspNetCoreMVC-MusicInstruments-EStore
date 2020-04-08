@@ -168,7 +168,7 @@ namespace MusicShop.Controllers
 
                     if (updateResult.Succeeded)
                     {
-                        
+                        //Logging out user and logging back in to refresh identity user with new username/email
                         await _signInManager.RefreshSignInAsync(userTemp);
                         TempData["userName"] = userFound.UserName;
                         return RedirectToAction("Details", "User");
@@ -186,6 +186,71 @@ namespace MusicShop.Controllers
 
             return View();
 
+        }
+
+        public async Task<ActionResult> ChangePassword()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (user != null)
+            {
+                var model = new ChangePasswordViewModel()
+                {
+                    UserId = user.Id,
+                };
+
+                return View(model);
+
+            } else
+            {
+                ModelState.AddModelError("", "User not found");
+                return View();
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(model.UserId);
+
+                if (user != null)
+                {
+                    var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword );
+
+                    if (result.Succeeded)
+                    {
+                        TempData["PasswordChangeSuccess"] = "true";
+                        return View();
+
+                    } else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                            return View(model);
+                        }
+
+                    }
+                } else
+                {
+                    ModelState.AddModelError("", "User not found");
+                    return View(model);
+                }
+
+
+
+            } else
+            {
+
+                ModelState.AddModelError("", "Error updating passsword, try again");
+                return View(model);
+            }
+
+            return View(model);
         }
 
     }
