@@ -24,7 +24,7 @@
             @if (signInManager.IsSignedIn(User))
             {
 
-                //Check if user has role USER
+                //Check if user has role other than Admin
                 @if (!User.IsInRole("Admin"))
                 {
 

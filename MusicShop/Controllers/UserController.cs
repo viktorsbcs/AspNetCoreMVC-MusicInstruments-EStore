@@ -223,7 +223,8 @@ namespace MusicShop.Controllers
 
                     if (result.Succeeded)
                     {
-                        TempData["PasswordChangeSuccess"] = "true";
+                        //Displaying success alert
+                        TempData["PasswordChangeSuccess"] = true;
                         return View();
 
                     } else
