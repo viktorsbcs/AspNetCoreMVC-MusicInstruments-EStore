@@ -10,7 +10,7 @@ using MusicShop.Models.ViewModels;
 
 namespace MusicShop.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -29,7 +29,7 @@ namespace MusicShop.Controllers
                 Name = r.Name
             });
             return View(model);
-            
+
         }
 
         // GET: Role/Details/5
@@ -41,6 +41,8 @@ namespace MusicShop.Controllers
         // GET: Role/Create
         public ActionResult Create()
         {
+            ViewBag.returnUrl = Request.Headers["Referer"].ToString();
+
             return View();
         }
 
@@ -49,7 +51,6 @@ namespace MusicShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RoleViewModel model)
         {
-
             try
             {
                 if (ModelState.IsValid)

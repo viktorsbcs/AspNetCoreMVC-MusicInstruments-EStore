@@ -20,6 +20,7 @@ namespace MusicShop.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IProductRepository _productRepository;
+        private const string _ADMINEMAIL = "admin@gmail.com";
 
         public AdministrationController(IProductRepository productRepository, ICategoryRepository categoryRepository, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
@@ -116,11 +117,19 @@ namespace MusicShop.Controllers
             {
 
                 List<UserViewModel> model = new List<UserViewModel>();
+
+                //Skip including admin account in the list
                 var rolesList = _roleManager.Roles.ToList();
 
                 foreach (var user in userList)
                 {
+                    if (user.Email == _ADMINEMAIL)
+                    {
+                        continue;
+                    }
+
                     List<RoleViewModel> roleViewModel = new List<RoleViewModel>();
+
 
                     foreach (var role in rolesList)
                     {
@@ -135,6 +144,9 @@ namespace MusicShop.Controllers
 
                         roleViewModel.Add(roleModel);
                     }
+
+                   
+                    
 
                     var userViewModel = new UserViewModel()
                     {
@@ -153,6 +165,83 @@ namespace MusicShop.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UserDetails(string id)
+        {
+            ViewBag.returnUrl = Request.Headers["Referer"].ToString();
+
+            var user = await _userManager.FindByIdAsync(id);
+
+            if(user != null)
+            {
+                List<RoleViewModel> roleViewModel = new List<RoleViewModel>();
+                var rolesList = _roleManager.Roles.ToList();
+
+                foreach (var role in rolesList)
+                {
+                    var isUserInRole = await _userManager.IsInRoleAsync(user, role.Name);
+
+                    var roleModel = new RoleViewModel()
+                    {
+                        Id = role.Id,
+                        Name = role.Name,
+                        Selected = isUserInRole ? true : false
+                    };
+
+                    roleViewModel.Add(roleModel);
+                }
+
+                var userViewModel = new UserViewModel()
+                {
+                    Id = user.Id,
+                    Name = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    UserInRoles = roleViewModel
+
+                };
+
+
+
+                return View(userViewModel);
+            }
+
+
+
+            ModelState.AddModelError("", "User Id not found");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserDetails(UserViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                var user = await _userManager.FindByIdAsync(model.Id);
+
+                foreach (var role in model.UserInRoles)
+                {
+                    if (role.Selected)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.Name);
+                    } else
+                    {
+                        await _userManager.RemoveFromRoleAsync(user, role.Name);
+                    }
+                }
+
+                TempData["UserRolesUpdated"] = "User roles successfuly updated";
+               
+                return View(model);
+
+            }
+
+
+            ModelState.AddModelError("", "Error updating user");
+            return View(model);
+        }
     }
 
 

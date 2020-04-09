@@ -155,7 +155,6 @@ namespace MusicShop.Controllers
                 var userTemp = userFound;
                 if (userFound != null)
                 {
-                    //userFound.UserName = model.Name;
                     userFound.Email = model.Email;
                     userFound.NormalizedEmail = model.Email.ToUpper();
                     userFound.NormalizedUserName = model.Email.ToUpper();

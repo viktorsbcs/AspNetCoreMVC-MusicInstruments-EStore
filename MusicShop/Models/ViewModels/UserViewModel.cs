@@ -16,6 +16,7 @@ namespace MusicShop.Models.ViewModels
         public string Email { get; set; }
 
         [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
         public List<RoleViewModel> UserInRoles { get; set; }

@@ -1,0 +1,100 @@
+﻿@model MusicShop.Models.ViewModels.UserViewModel
+
+@{
+    Layout = "~/Views/Shared/Admin/_AdminLayout.cshtml";
+}
+
+<div class="col-12 mb-5"><h1>Details</h1></div>
+
+@if (TempData["UserRolesUpdated"] != null)
+{
+    <partial name="_SuccessAlert" model="@TempData["UserRolesUpdated"].ToString()" />
+
+}
+
+
+
+<dl class="row col-12 mb-5">
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Id)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Id)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Email)/Name
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.PhoneNumber)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.PhoneNumber)
+    </dd>
+
+    <dt class="col-sm-2">Roles</dt>
+    <dd class="col-sm-10">
+
+        <form asp-action="UserDetails" asp-controller="Administration">
+
+
+
+            <input asp-for="Id" type="hidden" />
+
+            <ul class="list-group col-sm-6 col-md-4 mb-5">
+
+                @for (int i = 0; i < @Model.UserInRoles.Count; i++)
+                {
+
+                    <li class="list-group-item pl-5">
+                        <input type="checkbox" asp-for="@Model.UserInRoles[i].Selected" />
+                        <label asp-for="@Model.UserInRoles[i].Selected">@Model.UserInRoles[i].Name</label>
+                        <input type="hidden" asp-for="@Model.UserInRoles[i].Id" a />
+                        <input type="hidden" asp-for="@Model.UserInRoles[i].Name" a />
+
+                    </li>
+
+                }
+
+
+
+                @*@foreach (var role in @Model.UserInRoles)
+                    {
+                        <li class="list-group-item pl-5">
+                            <input type="hidden" name="" asp-for="@role.Id" />
+                            <input type="checkbox" asp-for="@role.Selected" />
+                            <label class="form-check-label">@role.Name</label>
+
+
+
+                            @if (role.Selected)
+                                {
+                                    <input type="checkbox" class="form-check-input" checked>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="form-check-input">
+                                }
+                                <label class="form-check-label" for="exampleCheck1">@role.Name</label>
+                        </li>
+                    }*@
+
+
+
+            </ul>
+            <button type="submit" class="btn btn-info">Updates Roles</button>
+        </form>
+
+    </dd>
+
+</dl>
+
+<div class="col-12">
+
+    <a asp-action="ViewUsers">Back</a>
+</div>
