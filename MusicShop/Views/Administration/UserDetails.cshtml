@@ -12,8 +12,6 @@
 
 }
 
-
-
 <dl class="row col-12 mb-5">
 
     <dt class="col-sm-2">
@@ -42,8 +40,6 @@
 
         <form asp-action="UserDetails" asp-controller="Administration">
 
-
-
             <input asp-for="Id" type="hidden" />
 
             <ul class="list-group col-sm-6 col-md-4 mb-5">
@@ -60,31 +56,6 @@
                     </li>
 
                 }
-
-
-
-                @*@foreach (var role in @Model.UserInRoles)
-                    {
-                        <li class="list-group-item pl-5">
-                            <input type="hidden" name="" asp-for="@role.Id" />
-                            <input type="checkbox" asp-for="@role.Selected" />
-                            <label class="form-check-label">@role.Name</label>
-
-
-
-                            @if (role.Selected)
-                                {
-                                    <input type="checkbox" class="form-check-input" checked>
-                                }
-                                else
-                                {
-                                    <input type="checkbox" class="form-check-input">
-                                }
-                                <label class="form-check-label" for="exampleCheck1">@role.Name</label>
-                        </li>
-                    }*@
-
-
 
             </ul>
             <button type="submit" class="btn btn-info">Updates Roles</button>
