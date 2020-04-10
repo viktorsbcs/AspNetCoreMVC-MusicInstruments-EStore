@@ -32,9 +32,9 @@ namespace MusicShop.Controllers
             this._roleManager = roleManager;
         }
 
-
+        
         public IActionResult AdminPanel()
-        {
+        { 
             try
             {
                 return View();

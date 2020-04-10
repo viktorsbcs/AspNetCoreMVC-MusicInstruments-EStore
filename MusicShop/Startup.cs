@@ -42,7 +42,7 @@ namespace MusicShop
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddAuthentication();
-            services.AddAuthentication();
+            services.AddAuthorization();
             services.AddControllersWithViews();
         }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MusicShop.Models.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MusicShop.Models.Repositories
 {
@@ -19,14 +20,14 @@ namespace MusicShop.Models.Repositories
             this._cart = cart;
         }
 
-        public IEnumerable<Order> AllOrders { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IEnumerable<Order> AllOrders { get => _appDbContext.Orders.ToList(); }
 
         public Order GetOrderById(int orderId)
         {
             return _appDbContext.Orders.FirstOrDefault(o => o.OrderId == orderId);
         }
 
-        public Order CreateOrder(Order order)
+        public Order CreateOrder(Order order,  IdentityUser user)
         {
             var orderFound = _appDbContext.Orders.SingleOrDefault(o => o.OrderId == order.OrderId);
 
@@ -40,9 +41,8 @@ namespace MusicShop.Models.Repositories
                     Country = order.Country,
                     Address = order.Address,
                     Email = order.Email,
-                    PhoneNumber = order.PhoneNumber
-
-
+                    PhoneNumber = order.PhoneNumber,
+                    UserId = user.Id
                 };
 
                 _appDbContext.Orders.Add(orderNew);
