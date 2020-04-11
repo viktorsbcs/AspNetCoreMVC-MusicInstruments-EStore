@@ -10,5 +10,7 @@ namespace MusicShop.Models.ViewModels
         public List<CartItem> CartItems { get; set; } 
         public Order Order { get; set; }
 
+        public List<Order> UserOrderList { get; set; }
+
     }
 }

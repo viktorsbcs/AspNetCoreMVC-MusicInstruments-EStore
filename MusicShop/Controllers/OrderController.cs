@@ -8,6 +8,7 @@ using MusicShop.Models.ViewModels;
 using MusicShop.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,7 +39,7 @@ namespace MusicShop.Controllers
 
                 if (orderNew != null)
                 {
-
+                    HttpContext.Session.Clear(); 
                     TempData["orderId"] = orderNew.OrderId;
                     return RedirectToAction("OrderComplete");
 
@@ -66,5 +67,7 @@ namespace MusicShop.Controllers
             var orderId = (int)TempData["orderId"];
             return View(new OrderViewModel() { Order = _orderRepository.GetOrderById(orderId), CartItems = _orderRepository.GetOrderProductList(orderId) });
         }
+
+       
     }
 }

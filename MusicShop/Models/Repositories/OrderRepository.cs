@@ -22,9 +22,28 @@ namespace MusicShop.Models.Repositories
 
         public IEnumerable<Order> AllOrders { get => _appDbContext.Orders.ToList(); }
 
+        
+
+        public List<Order> GetOrdersByUserId(string userId)
+        {
+            var orders = _appDbContext.Orders.Where(x => x.UserId == userId ).ToList();
+
+            foreach (var order in orders)
+            {
+                order.CartItems = GetOrderProductList(order.OrderId);
+                order.TotalOrderValue = _cart.GetTotalCartValueById(order.CartId);
+            }
+            //return _appDbContext.Orders.Where(x => x.UserId == userId).Include(x => x.User).Include(x=>x.CartItems.).ToList();
+            return orders;
+        }
+
         public Order GetOrderById(int orderId)
         {
-            return _appDbContext.Orders.FirstOrDefault(o => o.OrderId == orderId);
+            var order = _appDbContext.Orders.SingleOrDefault(o => o.OrderId == orderId);
+            order.CartItems = GetOrderProductList(orderId);
+
+            return order;
+
         }
 
         public Order CreateOrder(Order order,  IdentityUser user)
@@ -42,7 +61,9 @@ namespace MusicShop.Models.Repositories
                     Address = order.Address,
                     Email = order.Email,
                     PhoneNumber = order.PhoneNumber,
-                    UserId = user.Id
+                    UserId = user.Id,
+                    CartItems = _cart.GetCartItems(),
+                    TotalOrderValue = _cart.GetTotalCartValueById(_cart.GetCartId())
                 };
 
                 _appDbContext.Orders.Add(orderNew);

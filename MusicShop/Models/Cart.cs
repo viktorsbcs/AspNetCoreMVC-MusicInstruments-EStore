@@ -20,24 +20,16 @@ namespace MusicShop.Models
         {
             this._appDbContext = appDbContext;
         }
+
         public static Cart GetCart(IServiceProvider services)
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
             var dbContext = services.GetService<AppDbContext>();
 
-            
-
-            
-
-
             string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
             session.SetString("CartId", cartId);
 
             return new Cart(dbContext) { CartId = cartId };
-
-
-
-
         }
 
         public List<CartItem> GetCartItems()
@@ -50,6 +42,18 @@ namespace MusicShop.Models
             return this.CartId;
         }
 
+        //Get total cart value using Cart ID
+        public decimal GetTotalCartValueById(string cartId )
+        {
+            List<CartItem> cartItemList = _appDbContext.CartItems.Where(c => c.CartId == cartId).Include(p => p.Product).ToList(); ;
+            decimal amount = 0;
+            foreach (var item in cartItemList)
+            {
+                decimal temp = item.Quantity * item.Product.Price;
+                amount += temp;
+            }
+            return amount;
+        }
 
         public decimal TotalCartValue()
         {
@@ -61,6 +65,9 @@ namespace MusicShop.Models
             }
             return amount;
         }
+
+        
+
         public bool IfEnoughProductInStock(Product product, int quantity)
         {
             var productFound = _appDbContext.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
@@ -78,8 +85,6 @@ namespace MusicShop.Models
 
         public void AddToCart(Product product, int quantity)
         {
-
-
             var cartItem = _appDbContext.CartItems.SingleOrDefault(i => i.Product.ProductId == product.ProductId && i.CartId == this.CartId);
             var enoughInStockAvailable = IfEnoughProductInStock(product, quantity);
 
@@ -94,15 +99,12 @@ namespace MusicShop.Models
                 };
 
                 _appDbContext.CartItems.Add(newCartItem);
-
             }
             else
             {
                 if (enoughInStockAvailable) cartItem.Quantity += quantity;
 
             }
-
-
             _appDbContext.SaveChanges();
             this.CartItems = GetCartItems();
         }

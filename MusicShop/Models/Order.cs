@@ -19,7 +19,9 @@ namespace MusicShop.Models
         public IdentityUser User { get; set; }
         public Cart Cart { get; set; }
 
-        //public List<CartItem> {get; set; }
+        public List<CartItem> CartItems {get; set; }
+
+        public decimal TotalOrderValue { get; set; }
 
         [Required]
         [Display(Name = "First Name")]

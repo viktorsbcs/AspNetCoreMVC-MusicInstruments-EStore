@@ -9,9 +9,12 @@ namespace MusicShop.Models.Interfaces
     public interface IOrderRepository
     {
         IEnumerable<Order> AllOrders { get; }
-        Order GetOrderById(int orderId);
 
         List<CartItem> GetOrderProductList(int orderId);
         Order CreateOrder(Order order, IdentityUser user);
+
+        public List<Order> GetOrdersByUserId(string userId);
+        public Order GetOrderById(int orderId);
+
     }
 }

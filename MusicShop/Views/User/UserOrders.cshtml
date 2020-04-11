@@ -1,0 +1,38 @@
+﻿@model List<Order>
+
+
+<h1>UserOrders</h1>
+<hr />
+
+@if (TempData["UserOrderDetails"] != null)
+{
+    <partial name="_FailAlert" model="@TempData["UserOrderDetails"].ToString()" />
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order Id</th>
+            <th>Name / Email</th>
+            <th>Order value</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.OrderId
+                </td>
+                <td>@item.Email</td>
+                <td>@((item.TotalOrderValue).ToString("C", new CultureInfo("en-FR")))</td>
+                <td>TBA</td>
+                <td>
+                    @Html.ActionLink("Details", "UserOrderDetails", new { orderId = @item.OrderId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

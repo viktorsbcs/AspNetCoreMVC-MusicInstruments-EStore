@@ -1,0 +1,17 @@
+﻿@model Order
+
+
+<div>
+    <h3>Order details for @Model.FirstName @Model.LastName</h3>
+
+    
+    <p>Email: @Model.Email</p>
+    <p>Address: @Model.Address</p>
+    <p>Country: @Model.Country</p>
+    <p>Phone Nr: @Model.PhoneNumber</p>
+
+    <p>Items purchased:</p>
+
+    <partial name="_Table" model="@Model" />
+
+</div>

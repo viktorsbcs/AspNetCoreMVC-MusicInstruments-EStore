@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MusicShop.Controllers
 {
-    [Authorize(Roles ="User")]
+    [Authorize(Roles = "User")]
     public class UserController : Controller
 
     {
@@ -22,9 +22,10 @@ namespace MusicShop.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
 
-        public UserController(IProductRepository productRepository, ICategoryRepository categoryRepository, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public UserController(IProductRepository productRepository, ICategoryRepository categoryRepository, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, IOrderRepository orderRepository)
         {
 
             this._productRepository = productRepository;
@@ -32,6 +33,7 @@ namespace MusicShop.Controllers
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._roleManager = roleManager;
+            this._orderRepository = orderRepository;
         }
         // GET: User
         public async Task<ActionResult> Index()
@@ -52,7 +54,7 @@ namespace MusicShop.Controllers
             if (name == null) name = TempData["userName"].ToString();
 
             var userFound = await _userManager.FindByNameAsync(name);
-            if(userFound != null)
+            if (userFound != null)
             {
                 var model = new UserViewModel()
                 {
@@ -68,59 +70,10 @@ namespace MusicShop.Controllers
             return View();
         }
 
-        // GET: User/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: User/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: User/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         [HttpGet]
         public ActionResult Profile()
         {
-
-            var user = _userManager.Users.First(u=>u.UserName == User.Identity.Name);
+            var user = _userManager.Users.First(u => u.UserName == User.Identity.Name);
             if (user != null)
             {
                 var model = new UserViewModel()
@@ -133,15 +86,12 @@ namespace MusicShop.Controllers
                 };
 
                 return View(model);
-
             }
             else
             {
                 ModelState.AddModelError("", "Profile not found");
                 return View();
             }
-
-
 
         }
 
@@ -161,7 +111,7 @@ namespace MusicShop.Controllers
                     userFound.UserName = model.Email;
                     userFound.PhoneNumber = model.PhoneNumber;
 
-                    
+
 
                     var updateResult = await _userManager.UpdateAsync(userFound);
 
@@ -200,12 +150,13 @@ namespace MusicShop.Controllers
 
                 return View(model);
 
-            } else
+            }
+            else
             {
                 ModelState.AddModelError("", "User not found");
                 return View();
             }
-            
+
         }
 
         [HttpPost]
@@ -218,7 +169,7 @@ namespace MusicShop.Controllers
 
                 if (user != null)
                 {
-                    var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword );
+                    var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
 
                     if (result.Succeeded)
                     {
@@ -226,7 +177,8 @@ namespace MusicShop.Controllers
                         TempData["PasswordChangeSuccess"] = "Password successfully changed";
                         return View();
 
-                    } else
+                    }
+                    else
                     {
                         foreach (var error in result.Errors)
                         {
@@ -235,7 +187,8 @@ namespace MusicShop.Controllers
                         }
 
                     }
-                } else
+                }
+                else
                 {
                     ModelState.AddModelError("", "User not found");
                     return View(model);
@@ -243,7 +196,8 @@ namespace MusicShop.Controllers
 
 
 
-            } else
+            }
+            else
             {
 
                 ModelState.AddModelError("", "Error updating passsword, try again");
@@ -253,5 +207,35 @@ namespace MusicShop.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> UserOrders(string name)
+        {
+            var user = await _userManager.FindByNameAsync(name);
+
+            if (user != null)
+            {
+                var UserOrders = _orderRepository.GetOrdersByUserId(user.Id);
+
+                if (UserOrders != null)
+                {
+                    return View(UserOrders);
+                }
+            }
+
+            ModelState.AddModelError("", "User not found");
+            return View();
+        }
+
+        public IActionResult UserOrderDetails(int orderId)
+        {
+            var order = _orderRepository.GetOrderById(orderId);
+            if (order != null)
+            {
+                return View(order);
+            }
+
+            TempData["UserOrderDetails"] = "Order not found";
+            return RedirectToAction("UserOrders", User.Identity.Name);
+
+        }
     }
 }

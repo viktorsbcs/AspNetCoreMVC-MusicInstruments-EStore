@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicShop.Models;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MusicShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200410140152_Added_product_to_order_model")]
+    partial class Added_product_to_order_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -305,8 +307,8 @@ namespace MusicShop.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("TotalOrderValue")
-                        .HasColumnType("numeric");
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -314,6 +316,8 @@ namespace MusicShop.Migrations
                     b.HasKey("OrderId");
 
                     b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -434,6 +438,10 @@ namespace MusicShop.Migrations
                     b.HasOne("MusicShop.Models.Cart", "Cart")
                         .WithMany()
                         .HasForeignKey("CartId");
+
+                    b.HasOne("MusicShop.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
